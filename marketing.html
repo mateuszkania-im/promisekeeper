@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PromiseKeeper | Keep Small Promises, Build Big Trust</title>
+    <meta
+      name="description"
+      content="PromiseKeeper helps parents keep daily promises with warm reminders, child timelines, and a calm weekly recap."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1e1a17;
+        --muted: #6e6259;
+        --paper: #fff6ee;
+        --paper-2: #f6ecdf;
+        --card: rgba(255, 250, 244, 0.86);
+        --line: rgba(126, 101, 82, 0.2);
+        --peach: #f2b9a8;
+        --rose: #e89288;
+        --sage: #93ab85;
+        --sand: #efe2d3;
+        --shadow: 0 22px 44px rgba(71, 44, 25, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+
+      body {
+        font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(1000px 500px at 90% -10%, rgba(232, 146, 136, 0.2), transparent 60%),
+          radial-gradient(900px 500px at -10% 10%, rgba(147, 171, 133, 0.24), transparent 55%),
+          linear-gradient(180deg, var(--paper) 0%, #f8f0e8 100%);
+      }
+
+      .bg-noise {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.08;
+        background-image: radial-gradient(#000 0.6px, transparent 0.6px);
+        background-size: 3px 3px;
+      }
+
+      .container {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 20px 16px 52px;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 14px;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 247, 238, 0.84);
+      }
+
+      .brand {
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
+
+      .nav {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .nav a {
+        text-decoration: none;
+        color: var(--muted);
+        font-size: 13px;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        padding: 8px 12px;
+      }
+
+      .nav a:hover {
+        color: var(--ink);
+        border-color: var(--line);
+      }
+
+      .hero {
+        margin-top: 14px;
+        padding: 28px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: linear-gradient(140deg, rgba(242, 185, 168, 0.36), rgba(147, 171, 133, 0.26));
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        width: 380px;
+        height: 380px;
+        right: -120px;
+        top: -100px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.46) 0%, transparent 65%);
+        pointer-events: none;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 18px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 7px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        background: rgba(255, 255, 255, 0.74);
+        border: 1px solid rgba(126, 101, 82, 0.24);
+      }
+
+      h1,
+      h2 {
+        font-family: "Fraunces", Georgia, serif;
+        letter-spacing: -0.02em;
+      }
+
+      h1 {
+        margin: 14px 0 10px;
+        font-size: clamp(36px, 8vw, 66px);
+        line-height: 0.98;
+      }
+
+      .hero-copy {
+        margin: 0;
+        max-width: 620px;
+        color: #5f534b;
+        line-height: 1.58;
+        font-size: 17px;
+      }
+
+      .hero-cta {
+        margin-top: 22px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        border-radius: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        padding: 12px 16px;
+        transition: transform 200ms ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-primary {
+        color: #fff;
+        border: 1px solid transparent;
+        background: linear-gradient(125deg, #2e241d, #503a2c);
+      }
+
+      .btn-secondary {
+        color: var(--ink);
+        border: 1px solid rgba(126, 101, 82, 0.32);
+        background: rgba(255, 255, 255, 0.7);
+      }
+
+      .hero-card-col {
+        display: grid;
+        gap: 10px;
+      }
+
+      .mini-card {
+        border: 1px solid rgba(126, 101, 82, 0.24);
+        border-radius: 18px;
+        padding: 14px;
+        background: rgba(255, 255, 255, 0.74);
+      }
+
+      .mini-card strong {
+        display: block;
+        font-size: 20px;
+        margin-bottom: 2px;
+      }
+
+      .mini-card span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .section {
+        margin-top: 14px;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: var(--card);
+        padding: 20px;
+      }
+
+      .section h2 {
+        margin: 0;
+        font-size: clamp(26px, 5vw, 42px);
+      }
+
+      .section-sub {
+        margin: 8px 0 0;
+        color: var(--muted);
+      }
+
+      .feature-grid {
+        margin-top: 14px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .feature {
+        border-radius: 16px;
+        padding: 14px;
+        border: 1px solid rgba(126, 101, 82, 0.2);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(248, 236, 223, 0.76));
+      }
+
+      .feature h3 {
+        margin: 0 0 6px;
+        font-size: 17px;
+      }
+
+      .feature p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.52;
+        font-size: 14px;
+      }
+
+      .trust {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .trust-visual {
+        min-height: 230px;
+        border-radius: 20px;
+        border: 1px solid rgba(126, 101, 82, 0.24);
+        background:
+          linear-gradient(165deg, rgba(242, 185, 168, 0.5), rgba(147, 171, 133, 0.38)),
+          var(--sand);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(2px);
+        animation: float 8s ease-in-out infinite;
+      }
+
+      .blob.one {
+        width: 130px;
+        height: 130px;
+        background: rgba(255, 255, 255, 0.56);
+        left: 14px;
+        top: 20px;
+      }
+
+      .blob.two {
+        width: 170px;
+        height: 170px;
+        background: rgba(255, 255, 255, 0.44);
+        right: -20px;
+        bottom: -20px;
+        animation-delay: 1.5s;
+      }
+
+      .blob.three {
+        width: 88px;
+        height: 88px;
+        background: rgba(80, 58, 44, 0.14);
+        left: 44%;
+        bottom: 24%;
+        animation-delay: 2.3s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+        }
+
+        50% {
+          transform: translateY(-8px) scale(1.02);
+        }
+      }
+
+      .footer {
+        margin-top: 16px;
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        padding: 16px;
+        background: rgba(255, 250, 244, 0.82);
+      }
+
+      .footer p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      @media (max-width: 900px) {
+        .hero-grid,
+        .feature-grid,
+        .trust {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          padding: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-noise"></div>
+    <main class="container">
+      <header class="topbar">
+        <div class="brand">PromiseKeeper</div>
+        <nav class="nav" aria-label="Primary">
+          <a href="./marketing.html">Marketing</a>
+          <a href="./index.html">Privacy</a>
+          <a href="./terms.html">Terms</a>
+          <a href="./support.html">Support</a>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <span class="chip">Family routine app for iPhone</span>
+            <h1>Keep small promises, build big trust.</h1>
+            <p class="hero-copy">
+              PromiseKeeper helps parents track daily commitments, stay consistent with reminders,
+              and build confidence with children through visible follow-through.
+            </p>
+            <div class="hero-cta">
+              <a class="btn btn-primary" href="mailto:support@mcat.one?subject=PromiseKeeper%20TestFlight%20Access">Request TestFlight access</a>
+              <a class="btn btn-secondary" href="./index.html">Read Privacy Policy</a>
+            </div>
+          </div>
+          <div class="hero-card-col">
+            <article class="mini-card">
+              <strong>10 sec</strong>
+              <span>Add one promise in under ten seconds</span>
+            </article>
+            <article class="mini-card">
+              <strong>2 taps</strong>
+              <span>Mark as kept or move to tomorrow</span>
+            </article>
+            <article class="mini-card">
+              <strong>Weekly recap</strong>
+              <span>Calm stats without a heavy dashboard</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Designed for consistency, not pressure</h2>
+        <p class="section-sub">
+          PromiseKeeper is built around a supportive loop: one promise, one action, one moment of trust.
+        </p>
+        <div class="feature-grid">
+          <article class="feature">
+            <h3>Today focus</h3>
+            <p>One clear list of promises due today with fast keep/move actions.</p>
+          </article>
+          <article class="feature">
+            <h3>Daily reminder</h3>
+            <p>A gentle notification nudges the parent to stay on track each morning.</p>
+          </article>
+          <article class="feature">
+            <h3>Weekly recap</h3>
+            <p>Completion trends and one practical next-step suggestion.</p>
+          </article>
+          <article class="feature">
+            <h3>Child timeline</h3>
+            <p>Promises can be assigned per child to keep family context clear.</p>
+          </article>
+          <article class="feature">
+            <h3>Premium add-ons</h3>
+            <p>Co-parent sync, export options, and deeper household coordination tools.</p>
+          </article>
+          <article class="feature">
+            <h3>Local-first base</h3>
+            <p>Your core promise data stays on-device by default in this release.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section trust">
+        <div class="trust-visual" aria-hidden="true">
+          <div class="blob one"></div>
+          <div class="blob two"></div>
+          <div class="blob three"></div>
+        </div>
+        <div>
+          <h2>Privacy-first from day one</h2>
+          <p class="section-sub">
+            PromiseKeeper is designed for low data collection, clear legal pages, and transparent subscription terms.
+            You can review our policy and terms before enabling any premium plan.
+          </p>
+          <div class="hero-cta" style="margin-top:14px">
+            <a class="btn btn-secondary" href="./terms.html">Terms of Use</a>
+            <a class="btn btn-secondary" href="./support.html">Support</a>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>
+          PromiseKeeper by Mcat.one · Contact: <a href="mailto:support@mcat.one">support@mcat.one</a> ·
+          Last updated: April 18, 2026
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PromiseKeeper Support</title>
+    <meta name="description" content="PromiseKeeper support and contact page." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Plus+Jakarta+Sans:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1f1a17;
+        --muted: #6f645b;
+        --paper: #fff6ee;
+        --surface: rgba(255, 251, 245, 0.86);
+        --line: rgba(124, 99, 80, 0.22);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+        background:
+          radial-gradient(800px 400px at 100% 0%, rgba(234, 155, 143, 0.18), transparent 56%),
+          radial-gradient(800px 400px at 0% 0%, rgba(148, 171, 134, 0.22), transparent 52%),
+          linear-gradient(180deg, var(--paper), #f9efe3);
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 22px 16px 56px;
+      }
+
+      .hero,
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: var(--surface);
+      }
+
+      .hero {
+        padding: 20px;
+      }
+
+      .badge {
+        display: inline-flex;
+        border-radius: 999px;
+        padding: 7px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      h1,
+      h2 {
+        font-family: "Fraunces", Georgia, serif;
+      }
+
+      h1 {
+        margin: 12px 0 10px;
+        font-size: clamp(30px, 6vw, 50px);
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .links {
+        margin-top: 14px;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .link {
+        font-size: 13px;
+        text-decoration: none;
+        color: var(--ink);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 7px 12px;
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .panel {
+        margin-top: 12px;
+        padding: 18px;
+      }
+
+      .contact {
+        margin-top: 14px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 14px;
+        background: rgba(255, 255, 255, 0.7);
+      }
+
+      .contact strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .footer {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <section class="hero">
+        <span class="badge">PromiseKeeper Support</span>
+        <h1>Need help?</h1>
+        <p>
+          Contact us for technical issues, billing questions, or TestFlight feedback.
+          We usually reply within two business days.
+        </p>
+        <div class="links">
+          <a class="link" href="./marketing.html">Marketing</a>
+          <a class="link" href="./index.html">Privacy</a>
+          <a class="link" href="./terms.html">Terms</a>
+          <a class="link" href="./support.html">Support</a>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Contact channels</h2>
+        <div class="contact">
+          <strong>Email</strong>
+          <a href="mailto:support@mcat.one">support@mcat.one</a>
+        </div>
+        <div class="contact">
+          <strong>Legal contact details</strong>
+          <p>
+            Entity: Mcat.one (PromiseKeeper)<br />
+            Business address: Warsaw, Poland<br />
+            Direct support email: <a href="mailto:support@mcat.one">support@mcat.one</a>
+          </p>
+        </div>
+        <div class="contact">
+          <strong>Support subject templates</strong>
+          <p>
+            Billing: <code>PromiseKeeper billing issue</code><br />
+            Technical: <code>PromiseKeeper bug report</code><br />
+            TestFlight: <code>PromiseKeeper TestFlight feedback</code>
+          </p>
+        </div>
+      </section>
+
+      <p class="footer">© 2026 PromiseKeeper · Mcat.one</p>
+    </main>
+  </body>
+</html>
